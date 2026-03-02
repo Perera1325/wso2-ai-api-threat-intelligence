@@ -3,7 +3,6 @@ const path = require("path");
 
 exports.analyzeUser = (req, res) => {
     const userId = req.params.user;
-
     const scriptPath = path.join(__dirname, "../../ai-model/predict.py");
 
     const python = spawn("python", [scriptPath, userId]);
@@ -15,7 +14,18 @@ exports.analyzeUser = (req, res) => {
     });
 
     python.stdout.on("end", () => {
-        res.json({ result: dataString.trim() });
+        if (dataString.includes("|")) {
+            const [risk_score, status, confidence] = dataString.trim().split("|");
+
+            res.json({
+                user: userId,
+                risk_score: parseInt(risk_score),
+                status: status,
+                confidence: parseFloat(confidence)
+            });
+        } else {
+            res.json({ error: dataString.trim() });
+        }
     });
 
     python.stderr.on("data", (data) => {
