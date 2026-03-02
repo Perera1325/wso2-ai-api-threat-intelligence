@@ -26,3 +26,22 @@ app.get("/health", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
+
+app.get("/analyze-all", (req, res) => {
+    const { spawn } = require("child_process");
+    const path = require("path");
+
+    const scriptPath = path.join(__dirname, "../ai-model/analyze_all.py");
+
+    const python = spawn("python", [scriptPath]);
+
+    let dataString = "";
+
+    python.stdout.on("data", (data) => {
+        dataString += data.toString();
+    });
+
+    python.stdout.on("end", () => {
+        res.json(JSON.parse(dataString));
+    });
+});

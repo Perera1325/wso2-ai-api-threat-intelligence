@@ -1,36 +1,78 @@
-\# AI-Powered API Behavioral Threat Intelligence Layer for WSO2
+\# AI-Powered API Behavioral Threat Intelligence Layer
 
 
 
 \## Overview
 
-This project introduces an AI-driven behavioral anomaly detection layer 
-
-designed to enhance WSO2 API Manager security beyond traditional rate 
-
-limiting and signature-based protection.
+This project introduces an AI-driven behavioral anomaly detection layer designed to enhance WSO2 API Manager security beyond traditional rate limiting and signature-based protection.
 
 
 
-\## Objectives
+\## Problem
 
-\- Detect business logic abuse
+Modern API Gateways detect volumetric attacks but often fail to detect:
 
-\- Identify abnormal API usage behavior
+\- Business logic abuse
 
-\- Generate real-time risk scoring
+\- Intelligent scraping
 
-\- Provide actionable threat intelligence dashboard
+\- Credential misuse
+
+\- Behavioral drift
+
+
+
+\## Solution
+
+This system introduces:
+
+\- Isolation Forest-based anomaly detection
+
+\- Behavioral feature engineering
+
+\- Risk scoring (0–100)
+
+\- Confidence metrics
+
+\- Suspicious user ranking
+
+\- REST-based microservice architecture
 
 
 
 \## Architecture
 
-Details available in /docs/technical-architecture.md
+WSO2 API Manager → Log Collector → Feature Engine → AI Model → Risk Scoring → Threat Intelligence Dashboard
 
 
 
-\## Status
+\## API Endpoints
 
-Day 1 - Project Initialization
+GET /analyze/:user  
+
+GET /analyze-all  
+
+GET /health  
+
+
+
+\## Future Improvements
+
+\- Real-time log streaming
+
+\- Kafka integration
+
+\- WSO2 extension packaging
+
+\- Model retraining pipeline
+
+\- Kubernetes deployment
+
+
+
+\## Author
+
+Vinod Perera
+
+GitHub: Perera1325
 

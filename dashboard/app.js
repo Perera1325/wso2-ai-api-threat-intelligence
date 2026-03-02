@@ -1,28 +1,27 @@
 const backendURL = "http://localhost:5000";
 
-async function analyzeUser() {
-    const userId = document.getElementById("userId").value;
-    const resultElement = document.getElementById("result");
-
-    resultElement.innerText = "Analyzing...";
+async function loadAllUsers() {
+    const tableDiv = document.getElementById("userTable");
 
     try {
-        const response = await fetch(`${backendURL}/analyze/${userId}`);
+        const response = await fetch(`${backendURL}/analyze-all`);
         const data = await response.json();
 
-        if (data.error) {
-            resultElement.innerText = data.error;
-            return;
-        }
+        let html = "<table border='1' width='100%'>";
+        html += "<tr><th>User</th><th>Risk Score</th><th>Status</th></tr>";
 
-        resultElement.innerHTML = `
-            Risk Score: ${data.risk_score}/100 <br>
-            Status: ${data.status} <br>
-            Confidence: ${data.confidence}
-        `;
+        data.forEach(user => {
+            html += `<tr>
+                        <td>${user.user}</td>
+                        <td>${user.risk_score}</td>
+                        <td>${user.status}</td>
+                     </tr>`;
+        });
+
+        html += "</table>";
+        tableDiv.innerHTML = html;
+
     } catch (error) {
-        resultElement.innerText = "Error analyzing user.";
+        tableDiv.innerText = "Error loading users.";
     }
 }
-
-checkHealth();
